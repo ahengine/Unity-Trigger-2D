@@ -20,11 +20,11 @@ namespace Triggers2D
         public virtual float X => transform.position.x;
         public virtual float Y => transform.position.y;
 
-        protected void OnEnable() => TriggerHandler.Add(this);
+        protected void OnEnable() => Trigger2DHandler.Add(this);
 
-        protected void OnDisable() => TriggerHandler.Remove(this);
+        protected void OnDisable() => Trigger2DHandler.Remove(this);
 
-        protected void OnDestroy() => TriggerHandler.Remove(this);
+        protected void OnDestroy() => Trigger2DHandler.Remove(this);
 
         protected virtual void Reset() => eventsOwner = gameObject;
 

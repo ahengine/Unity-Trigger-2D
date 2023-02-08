@@ -5,10 +5,10 @@ namespace Triggers2D
 {
     public enum TriggerType { Rect, Circle, Line }
 
-    public class TriggerHandler : MonoBehaviour
+    public class Trigger2DHandler : MonoBehaviour
     {
-        private static TriggerHandler instance;
-        public static TriggerHandler Instance => instance ?? (instance = new TriggerHandler());
+        private static Trigger2DHandler instance;
+        public static Trigger2DHandler Instance => instance ?? (instance = new GameObject("Trigger Handler").AddComponent<Trigger2DHandler>());
 
         private List<Trigger2D> triggers = new List<Trigger2D>();
 
