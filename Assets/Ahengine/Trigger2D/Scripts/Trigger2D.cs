@@ -9,9 +9,6 @@ namespace Triggers2D
 {
     public abstract class Trigger2D : MonoBehaviour
     {
-        private const string ON_TRIGGER_ENTER_FUNC = "OnTrigger2DEnter";
-        private const string ON_TRIGGER_EXIT_FUNC = "OnTrigger2DExit";
-
         [SerializeField] private GameObject eventsOwner;
         [SerializeField] UnityEvent<Trigger2D> OnEnter;
         [SerializeField] UnityEvent<Trigger2D> OnExit;
@@ -39,7 +36,13 @@ namespace Triggers2D
 
             triggerd.Add(trigger);
 
-            if(eventsOwner) eventsOwner.SendMessage(ON_TRIGGER_ENTER_FUNC, trigger, SendMessageOptions.DontRequireReceiver);
+            if (eventsOwner)
+            {
+                var eventCompOwners = eventsOwner.GetComponents<ITrigger2DEvents>();
+
+                for (int i = 0; i < eventCompOwners.Length; i++)
+                    eventCompOwners[i].OnTrigger2DEnter(trigger);
+            }
             OnEnter.Invoke(trigger);
         }
 
@@ -52,7 +55,15 @@ namespace Triggers2D
                 if (triggerd[i] == trigger)
                 {
                     triggerd.Remove(trigger);
-                    if (eventsOwner) eventsOwner.SendMessage(ON_TRIGGER_EXIT_FUNC, trigger, SendMessageOptions.DontRequireReceiver);
+
+                    if (eventsOwner)
+                    {
+                        var eventCompOwners = eventsOwner.GetComponents<ITrigger2DEvents>();
+
+                        for (int ownersIndex = 0; ownersIndex < eventCompOwners.Length; ownersIndex++)
+                            eventCompOwners[ownersIndex].OnTrigger2DExit(trigger);
+                    }
+
                     OnExit.Invoke(trigger);
                     return;
                 }
