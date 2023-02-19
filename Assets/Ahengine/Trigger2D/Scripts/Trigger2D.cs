@@ -9,16 +9,19 @@ namespace Triggers2D
 {
     public abstract class Trigger2D : MonoBehaviour
     {
+        protected Transform tr;
+
         [SerializeField] private GameObject eventsOwner;
         [SerializeField] UnityEvent<Trigger2D> OnEnter;
         [SerializeField] UnityEvent<Trigger2D> OnExit;
 
-        protected List<Trigger2D> triggerd = new List<Trigger2D>();
+        [SerializeField] protected List<Trigger2D> triggerd = new List<Trigger2D>();
 
         protected virtual TriggerType TriggerType => TriggerType.Rect;
 
-        public virtual float X => transform.position.x;
-        public virtual float Y => transform.position.y;
+        public Vector2 offset;
+        public virtual float X => transform.position.x + offset.x;
+        public virtual float Y => transform.position.y + offset.y;
 
         protected void OnEnable() => Trigger2DHandler.Add(this);
 

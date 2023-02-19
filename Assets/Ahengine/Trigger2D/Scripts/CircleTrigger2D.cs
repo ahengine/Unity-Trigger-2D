@@ -1,48 +1,23 @@
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+using static Triggers2D.Trgger2DAlgorithms;
 
 namespace Triggers2D
 {
     public class CircleTrigger2D : Trigger2D
     {
         public float radius = 10;
-        public Vector2 offset;
-        private Transform tr;
 
         protected override TriggerType TriggerType => TriggerType.Circle;
 
+        public Circle property => new Circle(X, Y, radius);
+
         private void Awake() => tr = transform;
 
-        public override float X => tr.position.x + offset.x;
-        public override float Y => tr.position.y + offset.y;
+        protected override bool CheckRectTrigger(RectTrigger2D other) => 
+            OnTrigger(circle:property,rect: other.property);
 
-
-        protected override bool CheckRectTrigger(RectTrigger2D trigger) 
-        {
-            var distX = Mathf.Abs(X - trigger.X - trigger.Width / 2);
-            var distY = Mathf.Abs(Y - trigger.Y - trigger.Height / 2);
-
-            if (distX > (trigger.Width / 2 + radius)) return false;
-            if (distY > (trigger.Height / 2 + radius)) return false;
-
-            if (distX <= (trigger.Width / 2)) return true;
-            if (distY <= (trigger.Height / 2)) return true;
-
-            var dx = distX - trigger.Width / 2;
-            var dy = distY - trigger.Height / 2;
-            return dx * dx + dy * dy <= (radius * radius);
-        }
-
-        protected override bool CheckCircleTrigger(CircleTrigger2D trigger)
-        {
-            var dx = X - trigger.X;
-            var dy = Y - trigger.Y;
-            var distance = Mathf.Sqrt(dx * dx + dy * dy);
-
-            return distance < radius + trigger.radius;
-        }
+        protected override bool CheckCircleTrigger(CircleTrigger2D other) => 
+            OnTrigger(property, other.property);
 
         protected override void Reset()
         {
@@ -59,7 +34,7 @@ namespace Triggers2D
                 return;
 
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(transform.position + (Vector3)offset, radius);
+            Gizmos.DrawWireSphere(new Vector3(X,Y,transform.position.z), radius);
         }
 #endif
     }
