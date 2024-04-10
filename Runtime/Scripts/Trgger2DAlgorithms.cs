@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Triggers2D
+namespace UTrigger2D
 {
     public static class Trgger2DAlgorithms
     {
@@ -33,21 +33,6 @@ namespace Triggers2D
             var dx = distX - rect.width / 2;
             var dy = distY - rect.height / 2;
             return dx * dx + dy * dy <= (circle.radius * circle.radius);
-        }
-    }
-
-    [System.Serializable]
-    public struct Circle
-    {
-        public float x;
-        public float y;
-        public float radius;
-
-        public Circle(float x,float y, float radius)
-        {
-            this.x = x;
-            this.y = y;
-            this.radius = radius;
         }
     }
 }

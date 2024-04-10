@@ -1,7 +1,7 @@
 using UnityEngine;
-using static Triggers2D.Trgger2DAlgorithms;
+using static UTrigger2D.Trgger2DAlgorithms;
 
-namespace Triggers2D
+namespace UTrigger2D
 {
     public class RectTrigger2D : Trigger2D
     {

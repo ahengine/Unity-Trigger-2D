@@ -5,15 +5,15 @@ using UnityEngine.Events;
 using UnityEditor;
 #endif
 
-namespace Triggers2D
+namespace UTrigger2D
 {
     public abstract class Trigger2D : MonoBehaviour
     {
         protected Transform tr;
 
         [SerializeField] private GameObject eventsOwner;
-        [SerializeField] UnityEvent<Trigger2D> OnEnter;
-        [SerializeField] UnityEvent<Trigger2D> OnExit;
+        [SerializeField] private UnityEvent<Trigger2D> OnEnter;
+        [SerializeField] private UnityEvent<Trigger2D> OnExit;
 
         [SerializeField] protected List<Trigger2D> triggerd = new List<Trigger2D>();
 

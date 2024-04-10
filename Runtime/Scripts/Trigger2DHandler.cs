@@ -1,14 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Triggers2D
+namespace UTrigger2D
 {
-    public enum TriggerType { Rect, Circle, Line }
-
     public class Trigger2DHandler : MonoBehaviour
     {
         private static Trigger2DHandler instance;
-        public static Trigger2DHandler Instance => instance != null ? instance : (instance = new GameObject("Trigger2D Handler").AddComponent<Trigger2DHandler>());
+        public static Trigger2DHandler Instance => 
+            instance ?? (instance = new GameObject("Trigger2D Handler").AddComponent<Trigger2DHandler>());
 
         [SerializeField] private List<Trigger2D> triggers = new List<Trigger2D>();
         [SerializeField] private List<Trigger2D> triggersRemoveList = new List<Trigger2D>();
@@ -40,10 +39,8 @@ namespace Triggers2D
                 }
         }
 
-        private void OnLevelWasLoaded(int level)
-        {
+        private void OnLevelWasLoaded(int level) =>
             instance = null;
-        }
 
         private void OnDestroy() =>
             instance = null;
